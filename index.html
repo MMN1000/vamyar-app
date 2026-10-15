@@ -310,6 +310,28 @@ header,.topbar,.app-header{position:relative}
 .vy-font-select option{background:#ffffff;color:#24364b}
 .vy-preview-card{background:linear-gradient(180deg,#ffffff,#f7fbff)!important;color:#24364b!important;border:1px solid #d5e2eb!important;box-shadow:inset 0 1px 0 #ffffff,0 5px 0 #d7e0e7,0 10px 18px rgba(25,55,80,.10)!important}
 .vy-preview-card h3{color:#24364b!important}.vy-preview-card p{color:#61758a!important}.vy-preview-card strong{color:#078b9b!important}
+
+/* Dark mode: keep the main title/subtitle area transparent; the toolbar itself stays dark. */
+.dark-mode.premium-home .top>div:first-child,
+.dark-mode .top>div:first-child { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+.dark-mode .top .brand,
+.dark-mode .top .sub { background: transparent !important; background-color: transparent !important; }
+
+/* Keep the debt-page Back button visually identical regardless of entry route/theme */
+body.debt-page-mode #app .debt-head .debt-back,
+body.debt-page-mode #app .debt-head .debt-back:visited,
+body.debt-page-mode #app .debt-head .debt-back:hover,
+body.debt-page-mode #app .debt-head .debt-back:active,
+body.debt-page-mode #app .debt-head .debt-back:focus {
+  background: #f3f6f7 !important;
+  background-image: none !important;
+  color: #24364b !important;
+  border: 1px solid #cbd5df !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #24364b !important;
+}
 </style>
 
 <style id="vamyar-splash-style">
@@ -497,12 +519,11 @@ header,.topbar,.app-header{position:relative}
 @font-face{font-family:'VY-Khodkar';src:url('./khodkar.ttf') format('truetype');font-weight:normal;font-style:normal;font-display:swap}
 @font-face{font-family:'VY-IranNastaliq';src:url('./IranNastaliq.ttf') format('truetype');font-weight:normal;font-style:normal;font-display:swap}
 @font-face{font-family:'VY-DimaShekasteh';src:url('./Dima_Shekasteh.ttf') format('truetype');font-weight:normal;font-style:normal;font-display:swap}
-
-@font-face{font-family:'VY-Jomhori';src:url('./جمهوری(2).ttf') format('truetype');font-display:swap}
-@font-face{font-family:'VY-ZahraRosta';src:url('./زهرا روستا(2).ttf') format('truetype');font-display:swap}
-@font-face{font-family:'VY-Shekari';src:url('./شکاری(2).ttf') format('truetype');font-display:swap}
-@font-face{font-family:'VY-Moalla';src:url('./معلی(2).ttf') format('truetype');font-display:swap}
-@font-face{font-family:'VY-Shekasteh';src:url('./Shekasteh(2).ttf') format('truetype');font-display:swap}
+@font-face{font-family:'VY-Jomhori';src:url('./Jomhuri.ttf') format('truetype');font-weight:normal;font-style:normal;font-display:swap}
+@font-face{font-family:'VY-ZahraRosta';src:url('./ZahraRosta.ttf') format('truetype');font-weight:normal;font-style:normal;font-display:swap}
+@font-face{font-family:'VY-Shekari';src:url('./Shekari.ttf') format('truetype');font-weight:normal;font-style:normal;font-display:swap}
+@font-face{font-family:'VY-Moalla';src:url('./Moalla.ttf') format('truetype');font-weight:normal;font-style:normal;font-display:swap}
+@font-face{font-family:'VY-Shekasteh';src:url('./Shekasteh.ttf') format('truetype');font-weight:normal;font-style:normal;font-display:swap}
 </style>
 <style id="vamyar-eye-transparent-fix">
 #vamyarLoginGate #vamyarTogglePassword,
@@ -559,6 +580,25 @@ header,.topbar,.app-header{position:relative}
 }
 
 </style>
+<style>
+/* Dark mode: remove the separate dark blocks behind the brand title and subtitle.
+   Keep the toolbar itself dark. */
+body.dark-mode header.top .brand,
+body.dark-mode header.top .sub {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+</style>
+
+<style id="vamyar-prevent-pull-to-refresh">
+/* جلوگیری از رفرش ناخواسته با کشیدن صفحه از بالا به پایین در مرورگرهای موبایل */
+html, body { overscroll-behavior-y: none; overscroll-behavior: none; }
+body { overscroll-behavior-y: none; }
+/* اسکرول داخل فهرست‌ها و پنجره‌های داخلی همچنان کار می‌کند */
+.bank-choice-grid, .settings-content, .settings-page, [class*="scroll"], [style*="overflow-y: auto"] { overscroll-behavior-y: contain; }
+</style>
 </head>
 <body>
 <div id="vamyarLoginGate" dir="rtl" aria-label="ورود به وام‌یار" style="display:none;position:fixed;inset:0;z-index:99990;overflow:auto;background:#f8f5ed;background-image:radial-gradient(#e8dfce 0.7px,transparent 0.7px);background-size:16px 16px;align-items:center;justify-content:center;padding:28px 22px;box-sizing:border-box;font-family:Tahoma,sans-serif;color:#18334b">
@@ -584,6 +624,7 @@ header,.topbar,.app-header{position:relative}
 <button onclick="closeMenu();openAdd()"><span class="menu-item-icon" aria-hidden="true">➕</span><span>ثبت وام جدید</span></button>
 <button type="button" data-menu-page="home" onclick="event.preventDefault();event.stopPropagation();menuGo('home')"><span class="menu-item-icon" aria-hidden="true">🏠</span><span>صفحه اصلی</span></button>
 <button type="button" data-menu-page="loans" onclick="event.preventDefault();event.stopPropagation();menuGo('loans')"><span class="menu-item-icon" aria-hidden="true">📋</span><span>وام‌های من</span></button>
+<button type="button" data-menu-page="debts" onclick="event.preventDefault();event.stopPropagation();menuGo('debts')"><span class="menu-item-icon" aria-hidden="true">🧾</span><span>چک و قرض‌های من</span></button>
 <button type="button" data-menu-page="settings" onclick="event.preventDefault();event.stopPropagation();menuGo('settings')"><span class="menu-item-icon" aria-hidden="true">⚙️</span><span>تنظیمات</span></button>
 <button type="button" data-menu-page="backup" onclick="event.preventDefault();event.stopPropagation();menuGo('backup')"><span class="menu-item-icon" aria-hidden="true">💾</span><span>پشتیبان‌گیری و بازیابی</span></button>
 <button type="button" data-menu-page="about" onclick="event.preventDefault();event.stopPropagation();menuGo('about')"><span class="menu-item-icon" aria-hidden="true">ℹ️</span><span>درباره وام‌یار</span></button>
@@ -602,10 +643,10 @@ let appSettings=loadSettings(); if(appSettings.font==='pond'){appSettings.font='
 let loans=load(), page='home', selectedId=null;
 function loadSettings(){try{return Object.assign({theme:'sky',font:'tahoma',fontSize:16,dark:false,password:''},JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}'))}catch(e){return {theme:'sky',font:'tahoma',dark:false,password:''}}}
 function saveSettings(){localStorage.setItem(SETTINGS_KEY,JSON.stringify(appSettings));applySettings()}
-const themes={mistblue:['#63b8dc','#e8f6fc','#42afe0','#287ca5'],sky:['#38a8e8','#e4f4fd','#38a8e8','#176ba0'],orange:['#e9822b','#fff0e2','#f39a3e','#b95618'],red:['#d94848','#fde8e8','#e75b5b','#9e2929'],grass:['#399447','#e4f5e6','#49a85b','#206b30'],indigo:['#4f46a5','#ecebff','#6661c9','#302b79'],yellow:['#c49a00','#fff7cc','#e7c13b','#a87d00']};
+const themes={mistblue:['#FF00FF','#FFE0FF','#FF00FF','#B000B5'],sky:['#38a8e8','#e4f4fd','#38a8e8','#176ba0'],orange:['#e9822b','#fff0e2','#f39a3e','#b95618'],red:['#d94848','#fde8e8','#e75b5b','#9e2929'],grass:['#399447','#e4f5e6','#49a85b','#206b30'],indigo:['#4f46a5','#ecebff','#6661c9','#302b79'],yellow:['#c49a00','#fff7cc','#e7c13b','#a87d00'],lime:['#C7EA46','#F3F9D9','#C7EA46','#718D1A']};
 const fonts={tahoma:'Tahoma, sans-serif',nazanin:'VY-BNazanin, serif',titr:'VY-FarTitr, serif',homa:'VY-FarHoma, cursive',nastaliq:'VY-IranNastaliq, serif',dima:'VY-DimaShekasteh, serif',khodkar:'VY-Khodkar, cursive',jomhori:'VY-Jomhori, sans-serif',zahrarosta:'VY-ZahraRosta, sans-serif',shekari:'VY-Shekari, sans-serif',moalla:'VY-Moalla, serif',shekasteh:'VY-Shekasteh, cursive'};
 function applySettings(){let t=themes[appSettings.theme]||themes.sky,r=document.documentElement.style;r.setProperty('--teal',t[0]);r.setProperty('--teal2',t[1]);r.setProperty('--hero1',t[2]);r.setProperty('--hero2',t[3]);document.body.style.fontFamily=fonts[appSettings.font]||fonts.tahoma;document.documentElement.style.setProperty('--user-font-size',(appSettings.fontSize||16)+'px');document.body.style.fontSize=(appSettings.fontSize||16)+'px';document.body.dataset.font=appSettings.font||'tahoma';document.body.classList.toggle('dark-mode',!!appSettings.dark)}
-function setTheme(v){appSettings.theme=v;saveSettings();render()}function setFont(v){appSettings.font=v;saveSettings();document.body.style.fontFamily=fonts[appSettings.font]||fonts.tahoma;document.body.dataset.font=appSettings.font||'tahoma';const sample=document.getElementById('vyFontSample');if(sample)sample.style.fontFamily=fonts[appSettings.font]||fonts.tahoma;}function setDark(v){appSettings.dark=v;saveSettings();render()}
+function setTheme(v){appSettings.theme=v;saveSettings();render()}function setFont(v){appSettings.font=v;saveSettings();document.body.style.fontFamily=fonts[appSettings.font]||fonts.tahoma;document.body.dataset.font=appSettings.font||'tahoma';const sample=document.getElementById('vyFontSample');if(sample)sample.style.fontFamily=fonts[appSettings.font]||fonts.tahoma;}function setDark(v){appSettings.dark=v;saveSettings()}
 function openPasswordModal(){const existing=!!appSettings.password;document.getElementById('passwordModalTitle').textContent=existing?'تغییر رمز عبور':'تعیین رمز عبور';document.getElementById('passwordModalHint').textContent=existing?'برای تغییر رمز، رمز فعلی را وارد کن؛ سپس رمز جدید را تعیین و تکرار کن.':'یک رمز حداقل ۴ نویسه‌ای برای برنامه تعیین کن و آن را در کادر دوم تکرار کن.';document.getElementById('passwordCurrentWrap').style.display=existing?'block':'none';document.getElementById('removePasswordButton').style.display=existing?'block':'none';['passwordCurrent','passwordNew','passwordConfirm'].forEach(id=>document.getElementById(id).value='');document.getElementById('passwordError').textContent='';document.getElementById('passwordModal').classList.add('open')}
 function closePasswordModal(){document.getElementById('passwordModal').classList.remove('open')}
 function submitPasswordChange(){const current=document.getElementById('passwordCurrent').value,a=document.getElementById('passwordNew').value,b=document.getElementById('passwordConfirm').value,err=document.getElementById('passwordError');if(appSettings.password&&current!==appSettings.password){err.textContent='رمز فعلی درست نیست.';return}if(a.length<4){err.textContent='رمز جدید باید حداقل ۴ نویسه باشد.';return}if(a!==b){err.textContent='رمز و تکرار آن یکسان نیستند.';return}appSettings.password=a;saveSettings();closePasswordModal();render();alert('رمز عبور با موفقیت ذخیره شد.')}
@@ -689,7 +730,7 @@ function settingsBack(event){
  render();
  window.scrollTo(0,0);
 }
-function render(){if(page!=='about')document.body.classList.remove('about-mode');document.body.classList.toggle('page-backup',!selectedId&&page==='backup');document.body.classList.toggle('page-settings',!selectedId&&page==='settings');document.body.classList.toggle('premium-home',!selectedId&&page==='home');document.body.classList.toggle('settings-mode',!selectedId&&page==='settings');const root=document.getElementById('app');const fab=document.getElementById('fab');if(fab)fab.style.display=(!selectedId&&!['backup','settings'].includes(page))?'grid':'none';if(selectedId){renderDetails(root);return}if(page==='backup'){renderBackup(root);return}if(page==='settings'){renderSettings(root);return}if(page==='about'){renderAbout(root);return}if(page==='loans'){renderLoans(root);return}renderHome(root)}
+function render(){if(page!=='about')document.body.classList.remove('about-mode');document.body.classList.toggle('page-backup',!selectedId&&page==='backup');document.body.classList.toggle('page-settings',!selectedId&&page==='settings');document.body.classList.toggle('premium-home',!selectedId&&page==='home');document.body.classList.toggle('settings-mode',!selectedId&&page==='settings');const root=document.getElementById('app');const fab=document.getElementById('fab');if(fab)fab.style.display=(!selectedId&&!['backup','settings'].includes(page))?'grid':'none';if(selectedId){renderDetails(root);return}if(page==='backup'){renderBackup(root);return}if(page==='settings'){renderSettings(root);return}if(page==='about'){renderAbout(root);return}if(page==='loans'){renderLoans(root);return}if(page==='debts'&&window.renderDebts){window.renderDebts(root);return}renderHome(root)}
 function empty(title,body){return `<div class="card empty"><div class="emoji">▤</div><h3>${title}</h3><p>${body}</p><button class="primary" onclick="openAdd()">＋ ثبت اولین وام</button></div>`}
 const bankOptions=[
  ['mellat','بانک ملت','mellat'],['melli','بانک ملی','bmi'],['saderat','بانک صادرات','bsi'],['tejarat','بانک تجارت','tejarat'],['sepah','بانک سپه','sepah'],['keshavarzi','بانک کشاورزی','bki'],['maskan','بانک مسکن','maskan'],['parsian','بانک پارسیان','parsian'],['pasargad','بانک پاسارگاد','pasargad'],['saman','بانک سامان','saman'],['shahr','بانک شهر','shahr'],['refah','بانک رفاه','refah'],['ayandeh','بانک آینده','ayandeh'],['sina','بانک سینا','sina'],['eghtesadnovin','اقتصاد نوین','enbank'],['resalat','بانک رسالت','resalat'],['mehriran','بانک مهر ایران','mehriran'],['post','پست بانک ایران','post'],['blubank','بلو بانک','blubank'],['sanatmadan','بانک صنعت و معدن','sanatmadan']
@@ -706,9 +747,11 @@ function loanCard(l){let n=nextInst(l),paid=l.installments.filter(i=>i.paid).len
 function faDate(s){return String(s||'—').replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)]).replaceAll('-', '/')}
 function renderHome(root){
  let principal=loans.reduce((s,l)=>s+l.principal,0),remain=loans.reduce((s,l)=>s+totalRemain(l),0),paid=loans.reduce((s,l)=>s+l.installments.filter(i=>i.paid).reduce((a,i)=>a+i.amount,0),0);
- let upcoming=loans.flatMap(l=>l.installments.filter(i=>!i.paid).map(i=>({...i,loanName:l.name}))).filter(i=>{let d=dateDiff(todayJ(),i.dueDate);return d!==null&&d<=7}).sort((a,b)=>toDate(a.dueDate)-toDate(b.dueDate));
- let tableRows=loans.map(l=>{let paidAmount=l.installments.filter(i=>i.paid).reduce((s,i)=>s+i.amount,0),lastDue=l.installments.length?l.installments.reduce((last,i)=>!last||toDate(i.dueDate)>toDate(last)?i.dueDate:last,''):'—';return `<tr onclick="openDetails('${escapeHtml(l.id)}')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openDetails('${escapeHtml(l.id)}')}"><td class="loan-title-cell">${escapeHtml(l.name)}</td><td class="num-cell">${fa(l.principal)}</td><td class="num-cell">${fa(paidAmount)}</td><td class="num-cell">${fa(totalRemain(l))}</td><td class="num-cell">${fa(l.amount)}</td><td class="num-cell">${faDate(lastDue)}</td></tr>`}).join('');
- root.innerHTML=`<div class="hero"><small>مجموع اصل وام‌ها</small><div class="big">${money(principal)}</div><div class="herofoot"><span>${fa(loans.length)} وام ثبت‌شده</span><span>امروز: ${faDate(todayJ())}</span></div></div><div class="metrics"><div class="metric metric-principal"><div class="label">مجموع اقساط پرداخت‌نشده</div><div class="val" style="font-weight:900">${money(remain)}</div><div class="tiny">تومان اقساط پرداخت‌نشده</div></div><div class="metric metric-paid"><div class="label">مجموع اقساط پرداخت‌شده</div><div class="val">${fa(paid)}</div><div class="tiny">تومان اقساط تسویه‌شده</div></div></div><div class="section"><h2>جدول جامع وام‌ها</h2><span>${fa(loans.length)} وام</span></div><div class="home-table-caption">برای مشاهده جدول کامل اقساط، ردیف هر وام را لمس کن.</div>${loans.length?`<div class="card home-table-card"><div class="home-table-scroll"><table class="home-loans-table"><thead><tr><th>نام وام</th><th>مبلغ کل</th><th>پرداختی</th><th>مانده</th><th>مبلغ هر قسط</th><th>آخرین قسط</th></tr></thead><tbody>${tableRows}</tbody></table></div></div>`:empty('هنوز وامی ثبت نکرده‌ای','نام وام، مبلغ قسط و تاریخ اولین سررسید را وارد کن تا برنامه اقساط ساخته شود.')}<div class="section"><h2>سررسیدهای نزدیک</h2><span>۷ روز آینده و عقب‌افتاده</span></div>${upcoming.length?`<div class="card">${upcoming.slice(0,6).map(i=>{let s=dueStatus(i);return `<div class="reminderrow"><span class="dot ${s.dot}"></span><div style="flex:1"><b>${escapeHtml(i.loanName)}</b><div class="tiny">${faDate(i.dueDate)} · ${money(i.amount)}</div></div><span class="pill ${s.cls}">${s.label}</span></div>`}).join('')}</div>`:loans.length?`<div class="card" style="padding:17px;color:var(--muted)">فعلاً قسطی با سررسید نزدیک یا عقب‌افتاده ثبت نشده است.</div>`:''}<div class="notice">نسخه آزمایشی موبایلی: اطلاعات در حافظه مرورگر همین گوشی ذخیره می‌شود. از بخش «پشتیبان» مرتب فایل پشتیبان بگیر.</div><div class="home-loans-link-wrap" style="display:flex;justify-content:center;margin:18px 0 28px"><button type="button" class="primary" onclick="menuGo('loans')" style="width:100%;max-width:420px;padding:14px 18px;font-size:16px;font-weight:800;border-radius:14px">📋 مشاهده فهرست وام‌های من</button></div>`
+ let upcomingLoans=loans.flatMap(l=>l.installments.filter(i=>!i.paid).map(i=>({...i,loanName:l.name,reminderType:'قسط وام'}))).filter(i=>{let d=dateDiff(todayJ(),i.dueDate);return d!==null&&d<=7});
+ let upcomingChecks=typeof window.getUpcomingChecksForHome==='function'?window.getUpcomingChecksForHome():[];
+ let upcoming=[...upcomingLoans,...upcomingChecks].sort((a,b)=>toDate(a.dueDate)-toDate(b.dueDate));
+ let tableRows=[...loans].sort((a,b)=>{const lastDate=l=>(l.installments||[]).filter(i=>i.dueDate).map(i=>toDate(i.dueDate)).filter(d=>d instanceof Date&&!Number.isNaN(d.getTime())).reduce((latest,d)=>!latest||d>latest?d:latest,null);const da=lastDate(a),db=lastDate(b);if(!da&&!db)return 0;if(!da)return 1;if(!db)return -1;return db-da}).map(l=>{let paidAmount=l.installments.filter(i=>i.paid).reduce((s,i)=>s+i.amount,0),lastDue=l.installments.length?l.installments.reduce((last,i)=>!last||toDate(i.dueDate)>toDate(last)?i.dueDate:last,''):'—';return `<tr onclick="openDetails('${escapeHtml(l.id)}')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openDetails('${escapeHtml(l.id)}')}"><td class="loan-title-cell">${escapeHtml(l.name)}</td><td class="num-cell">${fa(l.principal)}</td><td class="num-cell">${fa(paidAmount)}</td><td class="num-cell">${fa(totalRemain(l))}</td><td class="num-cell">${fa(l.amount)}</td><td class="num-cell">${faDate(lastDue)}</td></tr>`}).join('');
+ root.innerHTML=`<div class="hero"><small>مجموع اصل وام‌ها</small><div class="big">${money(principal)}</div><div class="herofoot"><span>${fa(loans.length)} وام ثبت‌شده</span><span>امروز: ${faDate(todayJ())}</span></div></div><div class="metrics"><div class="metric metric-principal"><div class="label">مجموع اقساط پرداخت‌نشده</div><div class="val" style="font-weight:900">${money(remain)}</div><div class="tiny">تومان اقساط پرداخت‌نشده</div></div><div class="metric metric-paid"><div class="label">مجموع اقساط پرداخت‌شده</div><div class="val">${fa(paid)}</div><div class="tiny">تومان اقساط تسویه‌شده</div></div></div><div class="section"><h2>جدول جامع وام‌ها</h2><span>${fa(loans.length)} وام</span></div><div class="home-table-caption">وام‌ها بر اساس تاریخ آخرین قسط، از جدیدترین تاریخ به قدیمی‌ترین تاریخ مرتب شده‌اند؛ برای مشاهده جدول کامل اقساط، ردیف هر وام را لمس کن.</div>${loans.length?`<div class="card home-table-card"><div class="home-table-scroll"><table class="home-loans-table"><thead><tr><th>نام وام</th><th>مبلغ کل</th><th>پرداختی</th><th>مانده</th><th>مبلغ هر قسط</th><th>آخرین قسط</th></tr></thead><tbody>${tableRows}</tbody></table></div></div>`:empty('هنوز وامی ثبت نکرده‌ای','نام وام، مبلغ قسط و تاریخ اولین سررسید را وارد کن تا برنامه اقساط ساخته شود.')}<div class="section"><h2>سررسیدهای نزدیک</h2><span>۷ روز آینده و عقب‌افتاده</span></div>${upcoming.length?`<div class="card">${upcoming.slice(0,6).map(i=>{let st=dueStatus(i);return `<div class="reminderrow"><span class="dot ${st.dot}"></span><div style="flex:1;min-width:0"><b>${escapeHtml(i.loanName)}</b><div class="tiny">${i.reminderType==='چک'?'چک · ':''}${faDate(i.dueDate)} · ${money(i.amount)}</div></div><span class="pill ${st.cls}">${st.label}</span></div>`}).join('')}</div>`:loans.length?`<div class="card" style="padding:17px;color:var(--muted)">فعلاً قسطی با سررسید نزدیک یا عقب‌افتاده ثبت نشده است.</div>`:''}<div class="due-total-card"><div class="due-total-icon">◷</div><div class="due-total-info"><div class="due-total-title">مجموع سررسیدها</div><div class="due-total-sub">مجموع اقساط و چک‌های عقب‌افتاده و ۷ روز آینده</div><div class="due-total-count">${fa(upcoming.length)} مورد</div></div><div class="due-total-amount">${money(upcoming.reduce((sum,i)=>sum+Number(i.amount||0),0))}</div></div><div class="notice">نسخه آزمایشی موبایلی: اطلاعات در حافظه مرورگر همین گوشی ذخیره می‌شود. از بخش «پشتیبان» مرتب فایل پشتیبان بگیر.</div><div class="home-loans-link-wrap" style="display:flex;justify-content:center;margin:18px 0 28px"><button type="button" class="primary" onclick="menuGo('loans')" style="width:100%;max-width:420px;padding:14px 18px;font-size:16px;font-weight:800;border-radius:14px">📋 مشاهده فهرست وام‌های من</button></div>`
 }
 function renderLoans(root){root.innerHTML=`<div class="loans-page-head"><div><div class="loans-eyebrow">مدیریت و پیگیری</div><h2>وام‌های من</h2><p>وضعیت و اقساط همه وام‌ها را یک‌جا ببین.</p></div><div class="loans-count"><strong>${fa(loans.length)}</strong><span>وام ثبت‌شده</span></div></div>${loans.length?`<div class="loans-list">${loans.map((l,idx)=>{let n=nextInst(l),paid=l.installments.filter(i=>i.paid).length,rem=l.installments.length-paid,stat=n?dueStatus(n):{label:'تسویه کامل',cls:''},pct=l.installments.length?Math.round(paid/l.installments.length*100):0;return `<article class="card loan loan-summary redesigned-loan"><div class="redesigned-loan-top"><div class="loan-avatar">${loanIconMarkup(l)}</div><div class="redesigned-loan-title"><div class="loanname">${escapeHtml(l.name)}</div><div class="loan-principal">مبلغ کل وام <strong>${money(l.principal)}</strong></div></div><span class="pill ${stat.cls}">${stat.label}</span></div><div class="redesigned-loan-stats"><div class="loan-stat"><span>مبلغ هر قسط</span><strong>${money(l.amount)}</strong></div><div class="loan-stat"><span>اقساط باقی‌مانده</span><strong>${fa(rem)} <small>از ${fa(l.installments.length)}</small></strong></div></div><div class="loan-progress-meta"><span>پیشرفت پرداخت</span><strong>${fa(pct)}٪</strong></div><div class="progress redesigned-progress"><div style="width:${pct}%"></div></div><div class="actions redesigned-actions"><button class="soft" onclick="openDetails('${l.id}')">📋 جدول اقساط</button><button class="plain" onclick="openEdit('${l.id}')">✎ ویرایش</button><button class="dangerbtn" aria-label="حذف وام" onclick="deleteLoan('${l.id}')">حذف</button></div></article>`}).join('')}</div>`:empty('فهرست وام‌ها خالی است','برای شروع وام اولت را ثبت کن.')}`}
 
@@ -716,8 +759,8 @@ function renderDetails(root){let l=loans.find(x=>String(x.id)===String(selectedI
 function closeDetails(){if(selectedId)pushNavState();selectedId=null;document.body.classList.remove('detail-mode');render()}
 
 function renderSettings(root){
-const names={mistblue:'آبی محو',sky:'آبی آسمانی',orange:'نارنجی',red:'قرمز',grass:'سبز چمنی',indigo:'نیلی',yellow:'زرد'},colors={mistblue:'#63b8dc',sky:'#38a8e8',orange:'#e9822b',red:'#d94848',grass:'#399447',indigo:'#4f46a5',yellow:'#c49a00'};
-const fn={nazanin:'بی نازنین',titr:'فار تیتر',homa:'فار هما',nastaliq:'ایران نستعلیق',dima:'دیما شکسته',khodkar:'خودکار',jomhori:'جمهوری',zahrarosta:'زهرا روستا',shekari:'شکاری',moalla:'معلی',shekasteh:'شکسته'};
+const names={sky:'آبی آسمانی',yellow:'زرد',grass:'سبز چمنی',mistblue:'سرخابی',red:'قرمز',lime:'لیمویی',orange:'نارنجی',indigo:'نیلی'},colors={sky:'#38a8e8',yellow:'#c49a00',grass:'#399447',mistblue:'#FF00FF',red:'#d94848',lime:'#C7EA46',orange:'#e9822b',indigo:'#4f46a5'};
+const fn = { tahoma: 'پیش‌فرض (Tahoma)',nazanin:'نازنین',titr:'تیتر',homa:'هما',nastaliq:'ایران نستعلیق',dima:'دیما شکسته',khodkar:'خودکار',jomhori:'جمهوری',zahrarosta:'زهرا روستا',shekari:'شکاری',moalla:'معلی',shekasteh:'شکسته'};
 const fa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
 const fs=Math.min(32,Math.max(10,Number(appSettings.fontSize)||16));
 root.innerHTML=`<div class="settings-page"><header class="settings-header"><button type="button" aria-label="بازگشت به صفحه اصلی" onclick="settingsBack(event)">➜</button><h2>تنظیمات</h2></header><div class="settings-content">
@@ -760,7 +803,7 @@ function exportBackup(){let blob=new Blob([JSON.stringify({app:'VamYar',version:
 document.getElementById('fileImport').addEventListener('change',async e=>{let file=e.target.files[0];if(!file)return;try{let obj=JSON.parse(await file.text()),arr=Array.isArray(obj)?obj:obj.loans;if(!Array.isArray(arr)||arr.some(l=>!validBackupLoan(l)))throw Error('bad');let cleaned=normalizeLoans(arr);if(cleaned.length!==arr.length)throw Error('bad');if(!confirm('با بازیابی، اطلاعات فعلی جایگزین شود؟'))return;loans=cleaned;selectedId=null;save();alert('بازیابی انجام شد.')}catch(err){alert('فایل پشتیبان معتبر نیست.')}e.target.value=''});
 function clearAll(){if(confirm('همه وام‌ها و اقساط این مرورگر حذف شوند؟')){loans=[];selectedId=null;save()}}
 function menuGo(p){
-  if(!['home','loans','settings','backup','about'].includes(p)) return;
+  if(!['home','loans','settings','backup','about','debts'].includes(p)) return;
   if((p==='settings'||p==='backup')&&page!=='settings'&&page!=='backup')overlayReturnPage=page;
   if(p!==page||selectedId)pushNavState();
   closeMenu();
@@ -780,6 +823,79 @@ function requestExit(){closeMenu();if(!confirm('آیا می‌خواهید از 
 document.addEventListener('click',e=>{const w=document.querySelector('.menu-wrap');if(w&&!w.contains(e.target))closeMenu()});
 applySettings();render();if(appSettings.password)checkAppPassword();
 </script>
+
+
+<style id="vamyar-debts-page-style">
+.debt-page{padding:4px 0 90px}.debt-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0 16px}.debt-head h2{margin:0;font-size:22px}.debt-head p{margin:5px 0 0;color:var(--muted);font-size:13px}.debt-add{border:0;border-radius:13px;background:var(--primary);color:#fff;padding:12px 15px;font-weight:800;white-space:nowrap}.debt-totals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px}.debt-total{border:1px solid var(--line);border-radius:15px;background:var(--card);padding:13px}.debt-total small{display:block;color:var(--muted);font-size:12px}.debt-total strong{display:block;margin-top:7px;font-size:17px;overflow-wrap:anywhere}.debt-tabs{display:flex;gap:8px;margin:12px 0;overflow:auto}.debt-tab{flex:1;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:12px;padding:10px;font-weight:800;white-space:nowrap}.debt-tab.active{background:var(--primary);color:#fff;border-color:transparent}.debt-form{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:12px 0}.debt-form h3{margin:0 0 12px}.debt-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.debt-fields label{display:block;font-size:13px;color:var(--muted)}.debt-fields input,.debt-fields select{display:block;width:100%;box-sizing:border-box;margin-top:5px;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:10px;padding:11px;font:inherit;min-width:0}.debt-fields .wide{grid-column:1/-1}.debt-form-actions{display:flex;gap:8px;margin-top:12px}.debt-form-actions button{flex:1}.debt-table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:var(--card)}.debt-table{width:100%;border-collapse:collapse;min-width:650px}.debt-table th{background:#fff500;color:#262626;padding:11px 8px;font-weight:900}.debt-table td{padding:10px 8px;border-top:1px solid var(--line);text-align:center;font-weight:700}.debt-table .debt-name{text-align:right;min-width:125px}.debt-paid{color:#16864b}.debt-unpaid{color:#c62828}.debt-actions{display:flex;justify-content:center;gap:5px}.debt-actions button{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:8px;padding:6px 8px}.debt-footer-row td{background:#c9c9c9;font-weight:900}.debt-empty{padding:25px;text-align:center;color:var(--muted)}@media(max-width:430px){.debt-fields{grid-template-columns:1fr}.debt-fields .wide{grid-column:auto}.debt-head h2{font-size:19px}.debt-add{padding:10px 11px}.debt-totals{gap:7px}.debt-total{padding:10px}.debt-total strong{font-size:15px}}
+
+/* اصلاحات صفحه چک و قرض */
+body.debt-page-mode>header,body.debt-page-mode .app-header,body.debt-page-mode .topbar{display:none!important}
+body.debt-page-mode main#app{padding-top:8px}
+.debt-add{color:#fff!important;background:var(--primary)!important;border:1px solid var(--primary)!important;text-shadow:none!important;box-shadow:0 2px 5px #0001}
+.debt-total:first-child{background:color-mix(in srgb,var(--primary) 12%,var(--card));border-color:color-mix(in srgb,var(--primary) 35%,var(--line))}
+.debt-total:last-child{background:color-mix(in srgb,var(--primary) 22%,var(--card));border-color:color-mix(in srgb,var(--primary) 50%,var(--line))}
+.debt-tab.active{background:var(--primary)!important;color:#fff!important;border-color:var(--primary)!important;text-shadow:0 1px 1px #0002}
+.debt-tab:not(.active){color:var(--text)!important}
+.debt-table th{padding:7px 6px}.debt-table td{padding:5px 6px;line-height:1.35}.debt-table{min-width:580px}
+.debt-date-control{display:flex;gap:6px;margin-top:5px}.debt-date-control input{margin-top:0!important;flex:1}.debt-date-control button{min-width:44px;border:1px solid var(--line);border-radius:10px;background:var(--primary);color:#fff;font-size:20px;font-weight:900}
+.debt-calendar{margin-top:8px;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--card);box-shadow:0 8px 24px #0002}.debt-calendar[hidden]{display:none}.debt-cal-head,.debt-cal-week,.debt-cal-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;text-align:center}.debt-cal-head{grid-template-columns:40px 1fr 40px;align-items:center;margin-bottom:8px}.debt-cal-head button,.debt-cal-days button{border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--text);padding:7px 0;font:inherit}.debt-cal-week{font-size:11px;color:var(--muted);margin-bottom:4px}.debt-cal-days button{padding:8px 0}.debt-cal-days button:active{background:var(--primary);color:#fff}.debt-cal-blank{min-height:30px}
+@media(max-width:430px){.debt-table td{padding:4px 5px}.debt-table th{padding:6px 4px}.debt-add{padding:10px 12px}}
+
+.debt-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:9px}
+.debt-title{min-width:0;text-align:right}.debt-back{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:11px;padding:10px 11px;font:inherit;font-size:13px;font-weight:800;white-space:nowrap}
+.debt-table-wrap{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.compact-debt-table{width:100%;min-width:0;table-layout:fixed;border-collapse:collapse}
+.compact-debt-table th,.compact-debt-table td{padding:8px 3px;font-size:11px;line-height:1.45;overflow-wrap:anywhere}
+.compact-debt-table th:first-child,.compact-debt-table td:first-child{width:8%}
+.compact-debt-table .col-name{width:25%}.compact-debt-table .col-amount{width:21%}.compact-debt-table .col-date{width:16%}.compact-debt-table .col-status{width:21%}.compact-debt-table .col-delete{width:9%}
+.compact-debt-table .debt-name{min-width:0;text-align:center}
+.compact-debt-table .status-toggle{max-width:100%;white-space:normal;padding:5px 3px;font-size:10px;line-height:1.25;border-radius:8px}
+.debt-delete{border:1px solid #e3b7b7;background:#fff0f0;color:#b3261e;border-radius:8px;min-width:24px;padding:3px;font-size:16px;font-weight:800}
+.debt-row-edit{cursor:pointer}.debt-row-edit:active{filter:brightness(.97)}
+.debt-form-delete{color:#b3261e!important}
+@media(max-width:430px){.debt-head{gap:6px}.debt-head h2{font-size:18px}.debt-head p{font-size:11px}.debt-back{padding:8px 7px;font-size:11px}.debt-add{padding:9px 9px;font-size:12px}.compact-debt-table th,.compact-debt-table td{font-size:10px;padding:7px 2px}.compact-debt-table .status-toggle{font-size:9px;padding:4px 2px}}
+</style>
+<script id="vamyar-debts-page-script">
+(function(){
+ const STORE='vamyar_debts_v1'; let records=readRecords(), kind='check', editing=null, formOpen=false;
+ function readRecords(){try{const x=JSON.parse(localStorage.getItem(STORE)||'[]');return Array.isArray(x)?x:[]}catch(e){return []}}
+ function persist(){try{const payload=JSON.stringify(records);localStorage.setItem(STORE,payload);renderDebts()}catch(e){let reason='';if(e&&(e.name==='QuotaExceededError'||e.name==='NS_ERROR_DOM_QUOTA_REACHED'||e.code===22||e.code===1014)){reason='حافظهٔ ذخیره‌سازی این سایت پر شده است (QuotaExceededError).'}else if(e&&(e.name==='SecurityError'||e.name==='NotAllowedError')){reason='مرورگر اجازهٔ ذخیره‌سازی برای این سایت را نمی‌دهد.'}else{reason='مرورگر نتوانست در حافظهٔ محلی این سایت بنویسد.'}alert('ذخیره اطلاعات انجام نشد.\n\n'+reason+'\n\nاطلاعات فعلی را از بخش پشتیبان خروجی بگیر. سپس فضای گوشی را بررسی کن و در تنظیمات مرورگر، فقط داده‌های سایت همین برنامه را بررسی کن. پیش از پاک‌کردن داده‌های سایت حتماً نسخهٔ پشتیبان داشته باش.\n\nجزئیات خطا: '+(e&&e.name?e.name:'نامشخص'));}}
+ function n(v){return Number(digitsEn(v).replace(/[^0-9]/g,''))||0}
+ function fmt(v){return money(Number(v)||0)}
+ function dateKey(v){const p=parseJ(v||'');return p?jdn(p.y,p.mo,p.d):0}
+ function typeLabel(k){return k==='check'?'چک':'قرض'}
+ window.getUpcomingChecksForHome=function(){return records.filter(r=>r.kind==='check'&&Math.max(0,Number(r.amount||0)-Number(r.paid||0))>0&&r.date).map(r=>({dueDate:r.date,amount:Math.max(0,Number(r.amount||0)-Number(r.paid||0)),loanName:'چک: '+(r.name||'بدون عنوان'),reminderType:'چک'})).filter(i=>{const d=dateDiff(todayJ(),i.dueDate);return d!==null&&d<=7}).sort((a,b)=>toDate(a.dueDate)-toDate(b.dueDate));};
+ window.renderDebts=function(root){
+   const checks=records.filter(r=>r.kind==='check'), loans2=records.filter(r=>r.kind==='loan');
+   const visible=records.filter(r=>r.kind===kind).slice().sort((a,b)=>dateKey(b.date)-dateKey(a.date));
+   const total=visible.reduce((s,r)=>s+Number(r.amount||0),0), paid=visible.reduce((s,r)=>s+(Number(r.paid||0)>=Number(r.amount||0)?Number(r.amount||0):0),0), remain=Math.max(0,total-paid);
+   root.innerHTML=`<div class="debt-page"><div class="debt-head"><button type="button" class="debt-back" onclick="debtGoBack()" aria-label="بازگشت">‹ برگشت</button><div class="debt-title"><h2>چک و قرض‌های من</h2><p>چک‌ها و بدهی‌ها را ساده ثبت و پیگیری کن.</p></div><button class="debt-add" onclick="debtNew()">＋ افزودن</button></div><div class="debt-totals"><div class="debt-total"><small>مجموع مبلغ ${typeLabel(kind)}‌ها</small><strong>${fmt(total)}</strong></div><div class="debt-total"><small>مانده پرداخت‌نشده</small><strong>${fmt(remain)}</strong></div></div><div class="debt-tabs"><button class="debt-tab ${kind==='check'?'active':''}" onclick="debtSwitch('check')">🧾 چک‌های من (${fa(checks.length)})</button><button class="debt-tab ${kind==='loan'?'active':''}" onclick="debtSwitch('loan')">🤝 قرض‌های من (${fa(loans2.length)})</button></div>${formOpen?formHtml():''}<div class="debt-table-wrap">${visible.length?`<table class="debt-table compact-debt-table"><colgroup><col class="col-no"><col class="col-name"><col class="col-amount"><col class="col-date"><col class="col-status"><col class="col-delete"></colgroup><thead><tr><th>ردیف</th><th>${kind==='check'?'گیرنده / بابت':'قرض از / بابت'}</th><th>مبلغ قابل پرداخت</th><th>سررسید</th><th>وضعیت</th><th>حذف</th></tr></thead><tbody>${visible.map((r,i)=>{let rem=Math.max(0,Number(r.amount||0)-Number(r.paid||0));return `<tr class="debt-row-edit" onclick="debtEdit('${r.id}')" title="برای ویرایش لمس کن"><td>${fa(i+1)}</td><td class="debt-name">${escapeHtml(r.name||'—')}</td><td>${fa(r.amount)}</td><td>${r.date?faDate(r.date):'—'}</td><td><button type="button" class="pill status-toggle ${rem===0?'is-paid':'is-waiting'}" onclick="event.stopPropagation();debtTogglePaid('${r.id}')">${rem===0?'تسویه شد':'در انتظار پرداخت'}</button></td><td><button class="debt-delete" aria-label="حذف" onclick="event.stopPropagation();debtDelete('${r.id}')">×</button></td></tr>`}).join('')}<tr class="debt-footer-row"><td colspan="2">جمع کل</td><td>${fa(total)}</td><td colspan="3"></td></tr></tbody></table>`:`<div class="debt-empty">${kind==='check'?'هنوز چکی ثبت نکرده‌ای.':'هنوز قرضی ثبت نکرده‌ای.'}<br>برای شروع، دکمهٔ «افزودن» را بزن.</div>`}</div><p class="tiny" style="margin:12px 4px;line-height:1.9">اطلاعات این بخش جدا از فهرست وام‌ها ذخیره می‌شود. برای حفظ اطلاعات، از فایل پشتیبان هم استفاده کن.</p></div>`;
+ };
+ function formHtml(){const r=editing?records.find(x=>x.id===editing):null;return `<div class="debt-form"><h3>${r?'ویرایش':'ثبت'} ${typeLabel(kind)}</h3><form onsubmit="debtSave(event)"><div class="debt-fields"><label class="wide">${kind==='check'?'گیرنده چک یا بابت':'نام شخص یا بابت قرض'}<input id="debtName" required maxlength="100" value="${escapeHtml(r?.name||'')}" placeholder="مثلاً چک خرید یا قرض از علی"></label><label class="wide">مبلغ قابل پرداخت (تومان)<input id="debtAmount" required inputmode="numeric" value="${r?fa(r.amount):''}" placeholder="مثلاً ۵۰,۰۰۰,۰۰۰" oninput="fmtMoneyInput(this)"></label><label class="wide debt-date-field">تاریخ سررسید (شمسی)<div class="debt-date-control"><input id="debtDate" inputmode="numeric" value="${escapeHtml(r?.date||'')}" placeholder="انتخاب تاریخ" readonly><button type="button" onclick="debtCalendarToggle()" aria-label="باز کردن تقویم">▦</button></div><div id="debtCalendar" class="debt-calendar" hidden></div></label></div><div class="debt-form-actions"><button class="primary" type="submit">ذخیره</button><button class="soft" type="button" onclick="debtCancel()">انصراف</button>${r?`<button class="soft debt-form-delete" type="button" onclick="debtDelete('${r.id}')">حذف</button>`:``}</div></form></div>`}
+ window.debtSwitch=function(k){kind=k;formOpen=false;editing=null;renderDebts(document.getElementById('app'))};
+ window.debtNew=function(){editing=null;formOpen=true;renderDebts(document.getElementById('app'));setTimeout(()=>document.getElementById('debtName')?.focus(),30)};
+ window.debtCancel=function(){formOpen=false;editing=null;renderDebts(document.getElementById('app'))};
+ window.debtEdit=function(id){editing=id;const r=records.find(x=>x.id===id);if(r)kind=r.kind;formOpen=true;renderDebts(document.getElementById('app'));window.scrollTo(0,0)};
+ window.debtTogglePaid=function(id){const r=records.find(x=>x.id===id);if(!r)return;r.paid=Number(r.paid||0)>=Number(r.amount||0)?0:Number(r.amount||0);persist()};
+ let calY=1405,calM=1;
+ const monthNames=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+ window.debtCalendarToggle=function(){const box=document.getElementById('debtCalendar');if(!box)return;if(!box.hidden){box.hidden=true;return}const p=parseJ(document.getElementById('debtDate')?.value||'');if(p){calY=p.y;calM=p.mo}else{const now=dateJ(new Date());const q=parseJ(now);calY=q?.y||1405;calM=q?.mo||1}renderDebtCalendar()};
+ window.debtCalendarMove=function(step){calM+=step;if(calM<1){calM=12;calY--}if(calM>12){calM=1;calY++}renderDebtCalendar()};
+ window.debtCalendarPick=function(day){const el=document.getElementById('debtDate');if(el)el.value=`${calY}/${String(calM).padStart(2,'0')}/${String(day).padStart(2,'0')}`;const box=document.getElementById('debtCalendar');if(box)box.hidden=true};
+ function renderDebtCalendar(){const box=document.getElementById('debtCalendar');if(!box)return;const days=jalaliMonthDays(calY,calM),first=toDate(`${calY}/${calM}/1`),offset=first?((first.getUTCDay()+1)%7):0;const today=parseJ(dateJ(new Date()));let cells='';for(let i=0;i<offset;i++)cells+='<span class="debt-cal-blank"></span>';for(let d=1;d<=days;d++){const isToday=!!today&&today.y===calY&&today.mo===calM&&today.d===d;cells+=`<button type="button" class="${isToday?'debt-cal-today':''}" ${isToday?'aria-current="date" title="امروز"':''} onclick="debtCalendarPick(${d})">${fa(d)}</button>`}box.innerHTML=`<div class="debt-cal-head"><button type="button" onclick="debtCalendarMove(-1)">‹</button><strong>${monthNames[calM-1]} ${fa(calY)}</strong><button type="button" onclick="debtCalendarMove(1)">›</button></div><div class="debt-cal-week"><span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span></div><div class="debt-cal-days">${cells}</div><div class="debt-cal-legend">روز جاری با رنگ آبی مشخص شده است</div>`;box.hidden=false}
+ window.debtDelete=function(id){if(!confirm('این مورد حذف شود؟'))return;records=records.filter(r=>r.id!==id);persist()};
+ window.debtSave=function(e){e.preventDefault();const name=document.getElementById('debtName').value.trim(),amount=n(document.getElementById('debtAmount').value),date=normDate(document.getElementById('debtDate').value);if(!name||amount<=0){alert('نام و مبلغ معتبر را وارد کن.');return}if(date&&!parseJ(date)){alert('تاریخ را به شکل ۱۴۰۵/۰۷/۲۳ وارد کن.');return}const old=editing?records.find(x=>x.id===editing):null;let r={id:editing||('d'+Date.now()+Math.random().toString(16).slice(2,7)),kind,name,amount,paid:old&&Number(old.paid)>=Number(old.amount)?amount:0,date};if(editing)records=records.map(x=>x.id===editing?r:x);else records.push(r);formOpen=false;editing=null;persist()};
+ // Extend the existing page router without replacing the rest of the app.
+ const oldRender=window.render; window.render=function(){document.body.classList.toggle('debt-page-mode',typeof page!=='undefined'&&page==='debts');if(typeof page!=='undefined'&&page==='debts'){document.body.classList.remove('about-mode');const root=document.getElementById('app');const fab=document.getElementById('fab');if(fab)fab.style.display='none';window.renderDebts(root);return}return oldRender.apply(this,arguments)};
+ let debtReturnPage='home'; const oldMenuGo=window.menuGo; window.menuGo=function(p){if(p==='debts'){if(page!=='debts')debtReturnPage=page||'home';if(typeof pushNavState==='function')pushNavState();if(typeof closeMenu==='function')closeMenu();page='debts';selectedId=null;document.body.classList.remove('detail-mode');const fab=document.getElementById('fab');if(fab)fab.style.display='none';window.render();window.scrollTo(0,0);return}return oldMenuGo.apply(this,arguments)}; window.debtGoBack=function(){formOpen=false;editing=null;const target=debtReturnPage&&debtReturnPage!=='debts'?debtReturnPage:'home';oldMenuGo.call(window,target);};
+ const oldExport=window.exportBackup;window.exportBackup=function(){let blob=new Blob([JSON.stringify({app:'VamYar',version:3,exportedAt:new Date().toISOString(),loans,debts:records},null,2)],{type:'application/json'});let url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='vamyar-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+})();
+</script>
+
+
+<style id="vamyar-debts-page-style">
+.debt-page{padding:4px 0 90px}.debt-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0 16px}.debt-head h2{margin:0;font-size:22px}.debt-head p{margin:5px 0 0;color:var(--muted);font-size:13px}.debt-add{border:0;border-radius:13px;background:var(--primary);color:#fff;padding:12px 15px;font-weight:800;white-space:nowrap}.debt-totals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px}.debt-total{border:1px solid var(--line);border-radius:15px;background:var(--card);padding:13px}.debt-total small{display:block;color:var(--muted);font-size:12px}.debt-total strong{display:block;margin-top:7px;font-size:17px;overflow-wrap:anywhere}.debt-tabs{display:flex;gap:8px;margin:12px 0;overflow:auto}.debt-tab{flex:1;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:12px;padding:10px;font-weight:800;white-space:nowrap}.debt-tab.active{background:var(--primary);color:#fff;border-color:transparent}.debt-form{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:12px 0}.debt-form h3{margin:0 0 12px}.debt-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.debt-fields label{display:block;font-size:13px;color:var(--muted)}.debt-fields input,.debt-fields select{display:block;width:100%;box-sizing:border-box;margin-top:5px;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:10px;padding:11px;font:inherit;min-width:0}.debt-fields .wide{grid-column:1/-1}.debt-form-actions{display:flex;gap:8px;margin-top:12px}.debt-form-actions button{flex:1}.debt-table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:var(--card)}.debt-table{width:100%;border-collapse:collapse;min-width:650px}.debt-table th{background:#fff500;color:#262626;padding:11px 8px;font-weight:900}.debt-table td{padding:10px 8px;border-top:1px solid var(--line);text-align:center;font-weight:700}.debt-table .debt-name{text-align:right;min-width:125px}.debt-paid{color:#16864b}.debt-unpaid{color:#c62828}.debt-actions{display:flex;justify-content:center;gap:5px}.debt-actions button{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:8px;padding:6px 8px}.debt-footer-row td{background:#c9c9c9;font-weight:900}.debt-empty{padding:25px;text-align:center;color:var(--muted)}@media(max-width:430px){.debt-fields{grid-template-columns:1fr}.debt-fields .wide{grid-column:auto}.debt-head h2{font-size:19px}.debt-add{padding:10px 11px}.debt-totals{gap:7px}.debt-total{padding:10px}.debt-total strong{font-size:15px}}
+</style>
 
 <script id="vamyar-splash-script">(function(){var splash=document.getElementById('vamyarSplash');var started=Date.now();function showGate(){if(typeof window.showVamyarLogin==='function')window.showVamyarLogin()}function dismiss(){var wait=Math.max(0,2400-(Date.now()-started));setTimeout(function(){showGate();if(splash){splash.classList.add('hide');setTimeout(function(){if(splash.parentNode)splash.parentNode.removeChild(splash)},650)}},wait)}if(document.readyState==='complete'||document.readyState==='interactive'){dismiss()}else{document.addEventListener('DOMContentLoaded',dismiss,{once:true})}})();</script>
 
@@ -1631,18 +1747,18 @@ body.about-mode .header-add-loan { display:none !important; }
   appearance:none !important;
   border:1px solid rgba(255,255,255,.7) !important;
   border-radius:16px !important;
-  background:linear-gradient(180deg, var(--accent, #63b8dc) 0%, color-mix(in srgb, var(--accent, #63b8dc) 82%, #17324b 18%) 100%) !important;
+  background:linear-gradient(180deg, var(--accent, #FF00FF) 0%, color-mix(in srgb, var(--accent, #FF00FF) 82%, #17324b 18%) 100%) !important;
   color:#fff !important;
   font-weight:850 !important;
   padding:15px 18px !important;
   min-height:56px !important;
-  box-shadow:0 6px 0 color-mix(in srgb, var(--accent, #63b8dc) 65%, #17324b 35%), 0 12px 22px rgba(20,45,70,.20), inset 0 2px 0 rgba(255,255,255,.42) !important;
+  box-shadow:0 6px 0 color-mix(in srgb, var(--accent, #FF00FF) 65%, #17324b 35%), 0 12px 22px rgba(20,45,70,.20), inset 0 2px 0 rgba(255,255,255,.42) !important;
   transform:translateY(0);
   transition:transform .12s ease, box-shadow .12s ease;
 }
 .about-page > button.soft:active {
   transform:translateY(4px);
-  box-shadow:0 2px 0 color-mix(in srgb, var(--accent, #63b8dc) 65%, #17324b 35%), 0 5px 10px rgba(20,45,70,.16), inset 0 1px 0 rgba(255,255,255,.3) !important;
+  box-shadow:0 2px 0 color-mix(in srgb, var(--accent, #FF00FF) 65%, #17324b 35%), 0 5px 10px rgba(20,45,70,.16), inset 0 1px 0 rgba(255,255,255,.3) !important;
 }
 </style>
 
@@ -1802,6 +1918,548 @@ html body #app .menu-icon {
 @media (prefers-reduced-motion: reduce) {
  html body #app button, html body #app .metric-card, html body #app .loan-card { transition: none !important; }
 }
+</style>
+
+
+<style id="vamyar-dark-mode-complete-fix-v1">
+/* یکپارچه‌سازی حالت تاریک در همه صفحه‌ها، فرم افزودن و کارت‌های تنظیمات */
+body.dark-mode, body.dark-mode #app, body.dark-mode main,
+body.dark-mode .settings-page, body.dark-mode .settings-content,
+body.dark-mode .loans-page, body.dark-mode .about-page,
+body.dark-mode .about-section, body.dark-mode .support-page,
+body.dark-mode .loan-detail-page {
+  background: var(--bg, #111827) !important;
+  color: var(--ink, #f3f4f6) !important;
+}
+body.dark-mode .settings-page .card,
+body.dark-mode .settings-content .card,
+body.dark-mode .settings-content .vy-font-size-card,
+body.dark-mode .settings-content .vy-font-picker,
+body.dark-mode .settings-content .vy-font-select-wrap,
+body.dark-mode .settings-content .settings-option,
+body.dark-mode .loans-list .redesigned-loan,
+body.dark-mode .about-section,
+body.dark-mode .support-card,
+body.dark-mode .loan-detail-toolbar {
+  background: var(--card, #1f2937) !important;
+  color: var(--ink, #f3f4f6) !important;
+  border-color: var(--line, #374151) !important;
+}
+body.dark-mode .settings-content .vy-font-size-card h3,
+body.dark-mode .settings-content .vy-font-picker h3,
+body.dark-mode .settings-content .vy-font-select-current,
+body.dark-mode .settings-content .settings-option,
+body.dark-mode .settings-content label,
+body.dark-mode .settings-content b,
+body.dark-mode .settings-content strong,
+body.dark-mode .settings-content h3,
+body.dark-mode .settings-content h4,
+body.dark-mode .loans-page-head + *,
+body.dark-mode .about-page .about-section,
+body.dark-mode .about-page .about-section h3,
+body.dark-mode .about-page .about-section p {
+  color: var(--ink, #f3f4f6) !important;
+}
+body.dark-mode .settings-content .vy-font-size-card p,
+body.dark-mode .settings-content .vy-font-picker p,
+body.dark-mode .settings-content .muted,
+body.dark-mode .settings-content .muted-text,
+body.dark-mode .loans-page-head + * p {
+  color: var(--muted, #b8c2d1) !important;
+}
+body.dark-mode .settings-content .vy-font-select,
+body.dark-mode .settings-content select,
+body.dark-mode .settings-content input:not([type="checkbox"]),
+body.dark-mode .settings-content textarea,
+body.dark-mode .modal .sheet input:not([type="checkbox"]),
+body.dark-mode .modal .sheet select,
+body.dark-mode .modal .sheet textarea,
+body.dark-mode .modal .sheet .field input,
+body.dark-mode .modal .sheet .field select {
+  background: #273449 !important;
+  color: #f3f4f6 !important;
+  border-color: #46566b !important;
+  color-scheme: dark;
+}
+body.dark-mode .modal .sheet,
+body.dark-mode .modal .sheet #loanForm,
+body.dark-mode .modal .sheet #loanForm .field,
+body.dark-mode .modal .sheet #loanForm .formgrid {
+  background-color: var(--card, #1f2937) !important;
+  color: var(--ink, #f3f4f6) !important;
+}
+body.dark-mode .modal .sheet #loanForm .field label,
+body.dark-mode .modal .sheet #loanForm label,
+body.dark-mode .modal .sheet #loanForm h3,
+body.dark-mode .modal .sheet #loanForm p {
+  color: var(--ink, #f3f4f6) !important;
+}
+body.dark-mode .settings-content .vy-font-select-wrap,
+body.dark-mode .settings-content .vy-font-size-card,
+body.dark-mode .settings-content .vy-font-picker {
+  box-shadow: none !important;
+}
+body.dark-mode .settings-content .settings-option.active {
+  background: var(--teal2, #263f52) !important;
+  outline-color: var(--teal, #38a8e8) !important;
+}
+body.dark-mode .about-page .about-section,
+body.dark-mode .support-card,
+body.dark-mode .support-page .card {
+  background: var(--card, #1f2937) !important;
+  color: var(--ink, #f3f4f6) !important;
+}
+body.dark-mode .about-page .about-section p,
+body.dark-mode .support-page p { color: var(--muted, #b8c2d1) !important; }
+</style>
+
+<style id="vamyar-dark-mode-final-targeted-fix">
+/* Dark-mode finishing fixes: settings preview, loan icon picker, dashboard text/cards, and headers. */
+body.dark-mode .settings-content .vy-preview-card,
+body.dark-mode .settings-content .vy-preview-card * {
+  color: var(--ink, #f3f4f6) !important;
+}
+body.dark-mode .settings-content .vy-preview-card {
+  background: #1f2937 !important;
+  border-color: #374151 !important;
+  box-shadow: none !important;
+}
+body.dark-mode .settings-content .vy-preview-card .vy-preview-label { color: #b8c2d1 !important; }
+body.dark-mode .settings-content .vy-preview-card strong { color: #f9fafb !important; }
+
+/* Loan creation: icon tiles, selected icon summary, and close button. */
+body.dark-mode #loanForm .loan-icon-grid,
+body.dark-mode #loanForm .icon-choice-grid,
+body.dark-mode #loanForm .bank-choice-grid { background: transparent !important; }
+body.dark-mode #loanForm .loan-icon-item,
+body.dark-mode #loanForm .icon-choice-grid .icon-choice,
+body.dark-mode #loanForm .bank-choice-grid .bank-choice {
+  background: #263244 !important;
+  color: #f3f4f6 !important;
+  border-color: #465468 !important;
+}
+body.dark-mode #loanForm .loan-icon-item small,
+body.dark-mode #loanForm .icon-choice-grid .icon-choice small,
+body.dark-mode #loanForm .bank-choice-grid .bank-choice small { color: #e5e7eb !important; }
+body.dark-mode #loanForm .loan-icon-item.active,
+body.dark-mode #loanForm .icon-choice-grid .icon-choice.active,
+body.dark-mode #loanForm .bank-choice-grid .bank-choice.active {
+  background: #34465c !important;
+  color: #ffffff !important;
+  border-color: #d6ad16 !important;
+}
+body.dark-mode #loanForm .icon-preview,
+body.dark-mode #loanForm .selected-icon-card,
+body.dark-mode #loanForm .loan-icon-preview {
+  background: #263244 !important;
+  color: #f3f4f6 !important;
+  border-color: #465468 !important;
+}
+body.dark-mode .modal .sheet .sheettop .close,
+body.dark-mode .modal .sheet .close,
+body.dark-mode .modal .sheet button[onclick*="closeModal"] {
+  background: #374151 !important;
+  color: #f9fafb !important;
+  border: 1px solid #4b5563 !important;
+}
+
+/* Dashboard explanatory copy and summary metrics. */
+body.dark-mode.premium-home .section h2,
+body.dark-mode.premium-home .section span,
+body.dark-mode.premium-home .home-table-caption,
+body.dark-mode.premium-home .home-table-caption * {
+  color: #e5e7eb !important;
+}
+body.dark-mode.premium-home .metric-principal,
+body.dark-mode.premium-home .metric-paid,
+body.dark-mode.premium-home .metric-unpaid {
+  background: #202b3b !important;
+  border-color: #3a4658 !important;
+  color: #f4f5f8 !important;
+}
+body.dark-mode.premium-home .metric-principal .label,
+body.dark-mode.premium-home .metric-principal .tiny,
+body.dark-mode.premium-home .metric-paid .label,
+body.dark-mode.premium-home .metric-paid .tiny,
+body.dark-mode.premium-home .metric-unpaid .label,
+body.dark-mode.premium-home .metric-unpaid .tiny { color: #cbd5e1 !important; }
+body.dark-mode.premium-home .metric-principal .val,
+body.dark-mode.premium-home .metric-paid .val,
+body.dark-mode.premium-home .metric-unpaid .val { color: #ffffff !important; }
+
+/* Unpaid-balance hero in installment detail. */
+body.dark-mode.premium-home .hero {
+  background: linear-gradient(135deg, #26364a, #1f2937) !important;
+  border-color: #3a4658 !important;
+  color: #f4f5f8 !important;
+}
+body.dark-mode.premium-home .hero small,
+body.dark-mode.premium-home .hero .herofoot { color: #dbe4ee !important; }
+body.dark-mode.premium-home .hero .big { color: #ffffff !important; }
+
+/* App title bars on home and my-loans screens. */
+body.dark-mode.premium-home .top,
+body.dark-mode.premium-home .top .brand,
+body.dark-mode.premium-home .top .sub,
+body.dark-mode.premium-home .top .top-title,
+body.dark-mode.premium-home .top button,
+body.dark-mode.premium-home .top .menu-button {
+  background-color: #202b3b !important;
+  color: #f4f5f8 !important;
+  border-bottom-color: #3a4658 !important;
+}
+body.dark-mode.premium-home .top {
+  background: linear-gradient(120deg, #202b3b, #26364a) !important;
+  box-shadow: 0 3px 12px rgba(0,0,0,.18) !important;
+}
+</style>
+
+
+<style id="vamyar-dark-mode-specific-followup-fixes-v3">
+/* Dark mode follow-up: ensure remaining hard-coded light surfaces and dark text are overridden. */
+body.dark-mode header.top,
+body.dark-mode.premium-home header.top,
+html body.dark-mode:not(.settings-mode) header.top {
+  background: linear-gradient(115deg, #1b293b 0%, #202d40 55%, #26364a 100%) !important;
+  background-color: #202d40 !important;
+  border-bottom-color: #3a4b61 !important;
+  box-shadow: 0 5px 16px #0005 !important;
+}
+body.dark-mode header.top .brand,
+body.dark-mode header.top .sub,
+body.dark-mode header.top .top-title,
+body.dark-mode header.top .menu-btn,
+body.dark-mode header.top .hamburger,
+body.dark-mode header.top button {
+  color: #f3f4f6 !important;
+  -webkit-text-fill-color: #f3f4f6 !important;
+}
+body.dark-mode header.top .mark,
+body.dark-mode header.top .header-add-loan,
+body.dark-mode header.top .menu-btn,
+body.dark-mode header.top .hamburger {
+  background: #29394e !important;
+  border-color: #52647a !important;
+}
+
+/* Home page captions and section subtitles must not inherit a hard-coded dark color. */
+html body.dark-mode #app .section,
+html body.dark-mode #app .section h2,
+html body.dark-mode #app .section span,
+html body.dark-mode #app .home-table-caption,
+html body.dark-mode #app .home-table-caption *,
+html body.dark-mode #app .tiny,
+html body.dark-mode #app .metrics .metric .label,
+html body.dark-mode #app .metrics .metric .tiny {
+  color: #e2e8f0 !important;
+  -webkit-text-fill-color: #e2e8f0 !important;
+}
+html body.dark-mode #app .section span,
+html body.dark-mode #app .home-table-caption,
+html body.dark-mode #app .tiny {
+  opacity: 1 !important;
+}
+
+/* Keep the principal-loan summary card and all three dashboard metrics coordinated in dark mode. */
+html body.dark-mode.premium-home #app > .hero,
+html body.dark-mode.premium-home #app .metric-principal,
+html body.dark-mode.premium-home #app .metric-paid,
+html body.dark-mode.premium-home #app .metric {
+  background: linear-gradient(145deg, #26364b, #1b2637) !important;
+  border: 1px solid #3b4d63 !important;
+  color: #f3f4f6 !important;
+  box-shadow: 0 5px 0 #121a26, 0 10px 20px #0004, inset 0 1px 0 #ffffff12 !important;
+}
+html body.dark-mode.premium-home #app > .hero small,
+html body.dark-mode.premium-home #app > .hero .big,
+html body.dark-mode.premium-home #app > .hero .herofoot,
+html body.dark-mode.premium-home #app > .hero .herofoot span,
+html body.dark-mode.premium-home #app .metric .label,
+html body.dark-mode.premium-home #app .metric .val,
+html body.dark-mode.premium-home #app .metric .tiny {
+  color: #f3f4f6 !important;
+  -webkit-text-fill-color: #f3f4f6 !important;
+}
+
+/* Installment details: explicitly restyle the unpaid-balance hero card for dark mode. */
+html body.dark-mode.detail-mode #app .hero,
+html body.dark-mode #app .loan-detail-toolbar + .hero,
+html body.dark-mode #app .loan-detail-name + .hero {
+  background: linear-gradient(145deg, #26364b, #1b2637) !important;
+  border: 1px solid #3b4d63 !important;
+  color: #f3f4f6 !important;
+  box-shadow: 0 6px 18px #0004 !important;
+}
+html body.dark-mode.detail-mode #app .hero small,
+html body.dark-mode.detail-mode #app .hero .big,
+html body.dark-mode.detail-mode #app .hero .herofoot,
+html body.dark-mode.detail-mode #app .hero .herofoot span,
+html body.dark-mode #app .loan-detail-toolbar + .hero small,
+html body.dark-mode #app .loan-detail-toolbar + .hero .big,
+html body.dark-mode #app .loan-detail-toolbar + .hero .herofoot,
+html body.dark-mode #app .loan-detail-toolbar + .hero .herofoot span {
+  color: #f3f4f6 !important;
+  -webkit-text-fill-color: #f3f4f6 !important;
+}
+
+/* Loan entry modal close button and icon selection cards. */
+html body.dark-mode #modal .close,
+html body.dark-mode #modal .sheettop .close,
+html body.dark-mode #modal button.close {
+  background: #29394e !important;
+  color: #f3f4f6 !important;
+  -webkit-text-fill-color: #f3f4f6 !important;
+  border: 1px solid #52647a !important;
+  box-shadow: none !important;
+}
+html body.dark-mode #loanForm .loan-icon-grid .loan-icon-item,
+html body.dark-mode #loanForm .icon-choice-grid .icon-choice,
+html body.dark-mode #loanForm .bank-choice-grid .bank-choice {
+  background: #202d40 !important;
+  color: #e5edf7 !important;
+  border: 1px solid #465970 !important;
+  box-shadow: 0 2px 7px #0003 !important;
+}
+html body.dark-mode #loanForm .loan-icon-grid .loan-icon-item small,
+html body.dark-mode #loanForm .icon-choice-grid .icon-choice small,
+html body.dark-mode #loanForm .bank-choice-grid .bank-choice small {
+  color: #dbe6f3 !important;
+  -webkit-text-fill-color: #dbe6f3 !important;
+}
+html body.dark-mode #loanForm .loan-icon-grid .loan-icon-item.active,
+html body.dark-mode #loanForm .icon-choice-grid .icon-choice.active,
+html body.dark-mode #loanForm .bank-choice-grid .bank-choice.active {
+  background: #3b3520 !important;
+  color: #fff3c4 !important;
+  border: 2px solid #d6ad16 !important;
+  outline: none !important;
+}
+html body.dark-mode #loanForm .bank-choice-grid .bank-choice > .bank-logo {
+  background: #f8fafc !important;
+  border-color: #718096 !important;
+}
+
+/* Use a stronger selector than earlier light-theme overrides. */
+html body.dark-mode .home-table-caption,
+html body.dark-mode .section span,
+html body.dark-mode .section h2 {
+  color: #e2e8f0 !important;
+  -webkit-text-fill-color: #e2e8f0 !important;
+}
+</style>
+
+
+<style id="vamyar-final-brand-background-fix">
+/* Final override: keep only the toolbar background; remove any background blocks behind its title/subtitle. */
+body.dark-mode header.top > div:first-child,
+body.dark-mode header.top > div:first-child .brand,
+body.dark-mode header.top > div:first-child .sub,
+body.dark-mode header.top .brand,
+body.dark-mode header.top .sub {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  -webkit-background-clip: initial !important;
+}
+body.dark-mode header.top > div:first-child::before,
+body.dark-mode header.top > div:first-child::after,
+body.dark-mode header.top .brand::before,
+body.dark-mode header.top .brand::after,
+body.dark-mode header.top .sub::before,
+body.dark-mode header.top .sub::after {
+  content: none !important;
+  display: none !important;
+  background: transparent !important;
+}
+</style>
+
+<style id="vy-dark-settings-toolbar-fix">
+body.dark-mode .settings-page .settings-header,
+body.dark-mode .settings-header {
+  background: #111827 !important;
+  background-image: none !important;
+  color: #f3f4f6 !important;
+  border-color: #334155 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.35) !important;
+}
+body.dark-mode .settings-page .settings-header h2,
+body.dark-mode .settings-header h2,
+body.dark-mode .settings-header button,
+body.dark-mode .settings-header .back-btn {
+  color: #f3f4f6 !important;
+}
+</style>
+
+<style id="due-total-lime-color-fix">
+.due-total-card{background:#C7EA46!important;border-color:#a9cc2f!important;color:#24320b!important;box-shadow:0 7px 18px #00000012!important}
+.due-total-card .due-total-icon{background:#b5d936!important;color:#24320b!important}
+.due-total-card .due-total-title,.due-total-card .due-total-sub,.due-total-card .due-total-count,.due-total-card .due-total-amount{color:#24320b!important}
+</style>
+
+<style id="vamyar-debts-dark-mode-v25">
+/* Dark mode for every component of the checks-and-debts page.
+   Uses the app's existing body.dark-mode class and leaves light mode untouched. */
+body.dark-mode.debt-page-mode { background:#111827 !important; color:#f3f4f6 !important; }
+body.dark-mode.debt-page-mode #app,
+body.dark-mode.debt-page-mode #app .debt-page { background:transparent !important; color:#f3f4f6 !important; }
+body.dark-mode.debt-page-mode #app .debt-head h2 { color:#f3f4f6 !important; }
+body.dark-mode.debt-page-mode #app .debt-head p,
+body.dark-mode.debt-page-mode #app .debt-footer,
+body.dark-mode.debt-page-mode #app .debt-empty,
+body.dark-mode.debt-page-mode #app .tiny { color:#b8c2d1 !important; }
+body.dark-mode.debt-page-mode #app .debt-add {
+  background:var(--primary,var(--teal,#147d75)) !important; color:#fff !important;
+  border:1px solid var(--primary,var(--teal,#147d75)) !important;
+}
+body.dark-mode.debt-page-mode #app .debt-total {
+  background:#1f2937 !important; color:#f3f4f6 !important;
+  border:1px solid #374151 !important; box-shadow:none !important;
+}
+body.dark-mode.debt-page-mode #app .debt-total:first-child {
+  background:color-mix(in srgb,var(--primary,#147d75) 25%,#1f2937) !important;
+  border-color:color-mix(in srgb,var(--primary,#147d75) 48%,#374151) !important;
+}
+body.dark-mode.debt-page-mode #app .debt-total:last-child {
+  background:color-mix(in srgb,var(--primary,#147d75) 32%,#1f2937) !important;
+  border-color:color-mix(in srgb,var(--primary,#147d75) 55%,#374151) !important;
+}
+body.dark-mode.debt-page-mode #app .debt-total small { color:#cbd5e1 !important; }
+body.dark-mode.debt-page-mode #app .debt-total strong { color:#f8fafc !important; }
+body.dark-mode.debt-page-mode #app .debt-tab {
+  background:#1f2937 !important; color:#e5e7eb !important; border-color:#475569 !important;
+  box-shadow:none !important;
+}
+body.dark-mode.debt-page-mode #app .debt-tab.active {
+  background:var(--primary,var(--teal,#147d75)) !important; color:#fff !important;
+  border-color:var(--primary,var(--teal,#147d75)) !important;
+}
+body.dark-mode.debt-page-mode #app .debt-form,
+body.dark-mode.debt-page-mode #app .debt-table-wrap,
+body.dark-mode.debt-page-mode #app .debt-calendar {
+  background:#1f2937 !important; color:#f3f4f6 !important; border-color:#374151 !important;
+}
+body.dark-mode.debt-page-mode #app .debt-form h3,
+body.dark-mode.debt-page-mode #app .debt-fields label { color:#e5e7eb !important; }
+body.dark-mode.debt-page-mode #app .debt-fields input,
+body.dark-mode.debt-page-mode #app .debt-fields select,
+body.dark-mode.debt-page-mode #app .debt-fields textarea,
+body.dark-mode.debt-page-mode #app .debt-date-control input {
+  background:#111827 !important; color:#f9fafb !important; border-color:#4b5563 !important;
+  -webkit-text-fill-color:#f9fafb !important; color-scheme:dark;
+}
+body.dark-mode.debt-page-mode #app .debt-date-control button {
+  background:#263449 !important; color:#f9fafb !important; border-color:#52647a !important;
+}
+body.dark-mode.debt-page-mode #app .debt-calendar,
+body.dark-mode.debt-page-mode #app .debt-cal-head,
+body.dark-mode.debt-page-mode #app .debt-cal-days { background:#1f2937 !important; color:#f3f4f6 !important; }
+body.dark-mode.debt-page-mode #app .debt-cal-head strong,
+body.dark-mode.debt-page-mode #app .debt-cal-week { color:#cbd5e1 !important; }
+body.dark-mode.debt-page-mode #app .debt-cal-head button,
+body.dark-mode.debt-page-mode #app .debt-cal-days button {
+  background:#273449 !important; color:#f3f4f6 !important; border-color:#475569 !important;
+}
+body.dark-mode.debt-page-mode #app .debt-table {
+  background:#1f2937 !important; color:#f3f4f6 !important; border-color:#374151 !important;
+}
+body.dark-mode.debt-page-mode #app .debt-table th {
+  background:var(--primary,var(--teal,#147d75)) !important; color:#fff !important; border-color:#475569 !important;
+}
+body.dark-mode.debt-page-mode #app .debt-table td {
+  background:#1f2937 !important; color:#e5e7eb !important; border-color:#374151 !important;
+}
+body.dark-mode.debt-page-mode #app .debt-table .debt-paid { color:#86efac !important; }
+body.dark-mode.debt-page-mode #app .debt-table .debt-unpaid { color:#fca5a5 !important; }
+body.dark-mode.debt-page-mode #app .debt-footer-row td {
+  background:#263449 !important; color:#f3f4f6 !important; border-color:#475569 !important;
+}
+body.dark-mode.debt-page-mode #app .debt-actions button {
+  background:#273449 !important; color:#e5e7eb !important; border-color:#475569 !important;
+}
+body.dark-mode.debt-page-mode #app .debt-head .debt-back,
+body.dark-mode.debt-page-mode #app .debt-head .debt-back:visited,
+body.dark-mode.debt-page-mode #app .debt-head .debt-back:hover,
+body.dark-mode.debt-page-mode #app .debt-head .debt-back:active,
+body.dark-mode.debt-page-mode #app .debt-head .debt-back:focus {
+  background:#273449 !important; background-image:none !important; color:#f3f4f6 !important;
+  -webkit-text-fill-color:#f3f4f6 !important; border:1px solid #475569 !important;
+}
+body.dark-mode.debt-page-mode #app .debt-modal,
+body.dark-mode.debt-page-mode #app .debt-dialog,
+body.dark-mode.debt-page-mode #app .modal-content {
+  background:#1f2937 !important; color:#f3f4f6 !important; border-color:#374151 !important;
+}
+</style>
+
+
+<style id="vamyar-debts-dark-mode-final-fix">
+/* Dark mode overrides for every component of the Checks & Debts page.
+   These rules intentionally follow all earlier page-specific light-mode rules. */
+body.dark-mode.debt-page-mode { background:#0b1220 !important; color:#e5edf7 !important; }
+body.dark-mode.debt-page-mode #app,
+body.dark-mode.debt-page-mode #app .debt-page { background:transparent !important; color:#e5edf7 !important; }
+body.dark-mode.debt-page-mode #app .debt-head h2,
+body.dark-mode.debt-page-mode #app .debt-head p,
+body.dark-mode.debt-page-mode #app .debt-page p,
+body.dark-mode.debt-page-mode #app .debt-page label,
+body.dark-mode.debt-page-mode #app .debt-form h3 { color:#e5edf7 !important; }
+body.dark-mode.debt-page-mode #app .debt-total,
+body.dark-mode.debt-page-mode #app .debt-form,
+body.dark-mode.debt-page-mode #app .debt-table-wrap,
+body.dark-mode.debt-page-mode #app .debt-calendar {
+  background:#172235 !important; color:#e5edf7 !important; border-color:#33445b !important;
+  box-shadow:none !important;
+}
+body.dark-mode.debt-page-mode #app .debt-total:first-child { background:#1c3440 !important; border-color:#2e6670 !important; }
+body.dark-mode.debt-page-mode #app .debt-total:last-child { background:#263247 !important; border-color:#465773 !important; }
+body.dark-mode.debt-page-mode #app .debt-total small { color:#c3d0e0 !important; }
+body.dark-mode.debt-page-mode #app .debt-total strong { color:#f8fafc !important; }
+body.dark-mode.debt-page-mode #app .debt-tab,
+body.dark-mode.debt-page-mode #app .debt-tab:not(.active) {
+  background:#202d41 !important; color:#e5edf7 !important; border-color:#40516a !important;
+}
+body.dark-mode.debt-page-mode #app .debt-tab.active {
+  background:var(--primary,#147d75) !important; color:#fff !important; border-color:var(--primary,#147d75) !important;
+}
+body.dark-mode.debt-page-mode #app .debt-fields input,
+body.dark-mode.debt-page-mode #app .debt-fields select,
+body.dark-mode.debt-page-mode #app .debt-date-control input {
+  background:#0f1929 !important; color:#f8fafc !important; border-color:#465773 !important; caret-color:#fff !important;
+}
+body.dark-mode.debt-page-mode #app .debt-fields input::placeholder { color:#aab8ca !important; opacity:1 !important; }
+body.dark-mode.debt-page-mode #app .debt-date-control button,
+body.dark-mode.debt-page-mode #app .debt-add { color:#fff !important; }
+body.dark-mode.debt-page-mode #app .debt-table,
+body.dark-mode.debt-page-mode #app .compact-debt-table { background:#172235 !important; color:#e5edf7 !important; }
+body.dark-mode.debt-page-mode #app .debt-table th,
+body.dark-mode.debt-page-mode #app .compact-debt-table th {
+  background:#26374d !important; color:#f8fafc !important; border-color:#40516a !important;
+}
+body.dark-mode.debt-page-mode #app .debt-table td,
+body.dark-mode.debt-page-mode #app .compact-debt-table td {
+  background:#172235 !important; color:#e5edf7 !important; border-top-color:#33445b !important;
+}
+body.dark-mode.debt-page-mode #app .debt-table .debt-paid,
+body.dark-mode.debt-page-mode #app .debt-table .is-paid { color:#86efac !important; }
+body.dark-mode.debt-page-mode #app .debt-table .debt-unpaid,
+body.dark-mode.debt-page-mode #app .debt-table .is-waiting { color:#fca5a5 !important; }
+body.dark-mode.debt-page-mode #app .debt-footer-row td { background:#26374d !important; color:#f8fafc !important; }
+body.dark-mode.debt-page-mode #app .debt-table .status-toggle { color:#f8fafc !important; }
+body.dark-mode.debt-page-mode #app .debt-table .status-toggle.is-paid { background:#14532d !important; border-color:#166534 !important; }
+body.dark-mode.debt-page-mode #app .debt-table .status-toggle.is-waiting { background:#7f1d1d !important; border-color:#991b1b !important; }
+body.dark-mode.debt-page-mode #app .debt-actions button,
+body.dark-mode.debt-page-mode #app .debt-delete,
+body.dark-mode.debt-page-mode #app .debt-form-actions .soft { background:#26374d !important; color:#f8fafc !important; border-color:#465773 !important; }
+body.dark-mode.debt-page-mode #app .debt-calendar,
+body.dark-mode.debt-page-mode #app .debt-cal-head,
+body.dark-mode.debt-page-mode #app .debt-cal-week { color:#e5edf7 !important; }
+body.dark-mode.debt-page-mode #app .debt-cal-head strong { color:#f8fafc !important; }
+body.dark-mode.debt-page-mode #app .debt-cal-head button,
+body.dark-mode.debt-page-mode #app .debt-cal-days button { background:#26374d !important; color:#f8fafc !important; border-color:#465773 !important; }
+body.dark-mode.debt-page-mode #app .debt-empty { color:#c3d0e0 !important; }
+body.dark-mode.debt-page-mode #app .debt-head .debt-back { background:#26374d !important; color:#f8fafc !important; border-color:#465773 !important; -webkit-text-fill-color:#f8fafc !important; }
 </style>
 
 </body>
@@ -2320,4 +2978,161 @@ body.detail-mode .hero .herofoot,
 body.detail-mode .hero .herofoot span {
   color: #ffffff !important;
 }
+</style>
+
+<style id="due-total-card-style">
+.due-total-card{display:flex;align-items:center;gap:12px;margin:12px 0 18px;padding:16px;border-radius:18px;border:1px solid #d8e6e8;background:linear-gradient(135deg,#edf9f8 0%,#f8fbff 100%);color:#173b43;box-shadow:0 7px 18px #0000000b;direction:rtl}
+.due-total-icon{width:44px;height:44px;flex:0 0 44px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:#d5f1eb;color:#16796d;font-size:28px;font-weight:800}
+.due-total-info{flex:1;min-width:0}.due-total-title{font-weight:900;font-size:15px}.due-total-sub{font-size:11px;line-height:1.6;margin-top:3px;opacity:.78}.due-total-count{font-size:11px;margin-top:6px;color:#16796d;font-weight:800}.due-total-amount{font-size:clamp(14px,3.8vw,19px);font-weight:900;white-space:nowrap;font-variant-numeric:tabular-nums;color:#145c56}
+.dark-mode .due-total-card,body.premium-home.dark-mode .due-total-card{background:linear-gradient(135deg,#202f3b 0%,#243a45 100%);border-color:#40515f;color:#f1f5f9;box-shadow:0 8px 22px #0003}.dark-mode .due-total-icon{background:#294c4c;color:#8ce1ce}.dark-mode .due-total-count,.dark-mode .due-total-amount{color:#8ce1ce}
+</style>
+
+
+<style id="vamyar-debts-page-polish-v18">
+/* Readability and compact layout for the debts screen */
+body.debt-page-mode { background:#f3f6f7 !important; color:#172b4d !important; }
+body.debt-page-mode #app {
+  opacity:1 !important; filter:none !important; color:#172b4d !important;
+  background:transparent !important; padding:10px 12px 28px !important;
+  min-height:0 !important;
+}
+body.debt-page-mode #app .debt-page,
+body.debt-page-mode #app .debt-page * {
+  opacity:1;
+  text-shadow:none;
+}
+body.debt-page-mode #app .debt-page { color:#172b4d !important; padding:4px 0 24px !important; }
+body.debt-page-mode #app .debt-head { margin:4px 0 12px; align-items:center; }
+body.debt-page-mode #app .debt-head h2 { color:#172b4d !important; font-size:20px; font-weight:900; }
+body.debt-page-mode #app .debt-head p { color:#526477 !important; line-height:1.7; }
+body.debt-page-mode #app .debt-add {
+ background:var(--primary,var(--teal,#147d75)) !important;
+ color:#fff !important; border:0 !important; border-radius:12px;
+ padding:11px 14px; font-size:14px; font-weight:900;
+}
+body.debt-page-mode #app .debt-total {
+ background:#fff !important; border:1px solid #d6e0e5 !important;
+ box-shadow:0 2px 8px #172b4d0a; padding:11px 12px;
+}
+body.debt-page-mode #app .debt-total:first-child {
+ background:color-mix(in srgb, var(--primary,#147d75) 12%, #fff) !important;
+ border-color:color-mix(in srgb, var(--primary,#147d75) 32%, #fff) !important;
+}
+body.debt-page-mode #app .debt-total:last-child {
+ background:color-mix(in srgb, var(--primary,#147d75) 18%, #fff) !important;
+ border-color:color-mix(in srgb, var(--primary,#147d75) 40%, #fff) !important;
+}
+body.debt-page-mode #app .debt-total small { color:#34495e !important; font-size:12px; }
+body.debt-page-mode #app .debt-total strong { color:#172b4d !important; font-size:16px; }
+body.debt-page-mode #app .debt-tabs { margin:10px 0 12px; gap:8px; }
+body.debt-page-mode #app .debt-tab {
+ background:#fff !important; color:#24364b !important;
+ border:1px solid #cbd6df !important; padding:10px 7px;
+ box-shadow:none !important; font-size:13px;
+}
+body.debt-page-mode #app .debt-tab.active {
+ background:var(--primary,#147d75) !important; color:#fff !important;
+ border-color:var(--primary,#147d75) !important;
+}
+body.debt-page-mode #app .debt-form { background:#fff !important; color:#172b4d !important; padding:12px; margin:10px 0; }
+body.debt-page-mode #app .debt-form h3 { color:#172b4d !important; }
+body.debt-page-mode #app .debt-fields label { color:#34495e !important; }
+body.debt-page-mode #app .debt-fields input,
+body.debt-page-mode #app .debt-fields select {
+ background:#fff !important; color:#172b4d !important; border-color:#cbd6df !important;
+}
+body.debt-page-mode #app .debt-date-control button { color:#fff !important; }
+body.debt-page-mode #app .debt-calendar { background:#fff !important; color:#172b4d !important; }
+body.debt-page-mode #app .debt-cal-head strong { color:#172b4d !important; }
+body.debt-page-mode #app .debt-cal-week { color:#526477 !important; }
+body.debt-page-mode #app .debt-cal-head button,
+body.debt-page-mode #app .debt-cal-days button { background:#f5f8fa !important; color:#172b4d !important; }
+body.debt-page-mode #app .debt-table-wrap { background:#fff !important; border-color:#cbd6df !important; }
+body.debt-page-mode #app .debt-table {
+ width:100% !important; min-width:0 !important; table-layout:fixed !important;
+ background:#fff !important; color:#172b4d !important;
+}
+body.debt-page-mode #app .debt-table th {
+ background:var(--primary,#147d75) !important; color:#fff !important;
+ padding:8px 3px !important; font-size:11px !important; line-height:1.4;
+ overflow-wrap:anywhere;
+}
+body.debt-page-mode #app .debt-table td {
+ background:#fff !important; color:#172b4d !important;
+ padding:7px 3px !important; font-size:11px !important; line-height:1.45;
+ border-top:1px solid #e1e8ed !important; overflow-wrap:anywhere; word-break:normal;
+}
+body.debt-page-mode #app .debt-table th:nth-child(1),
+body.debt-page-mode #app .debt-table td:nth-child(1) { width:8%; }
+body.debt-page-mode #app .debt-table th:nth-child(2),
+body.debt-page-mode #app .debt-table td:nth-child(2) { width:19%; }
+body.debt-page-mode #app .debt-table th:nth-child(3),
+body.debt-page-mode #app .debt-table td:nth-child(3) { width:17%; }
+body.debt-page-mode #app .debt-table th:nth-child(4),
+body.debt-page-mode #app .debt-table td:nth-child(4) { width:14%; }
+body.debt-page-mode #app .debt-table th:nth-child(5),
+body.debt-page-mode #app .debt-table td:nth-child(5) { width:14%; }
+body.debt-page-mode #app .debt-table th:nth-child(6),
+body.debt-page-mode #app .debt-table td:nth-child(6) { width:13%; }
+body.debt-page-mode #app .debt-table th:nth-child(7),
+body.debt-page-mode #app .debt-table td:nth-child(7) { width:15%; }
+body.debt-page-mode #app .debt-table .debt-name { min-width:0 !important; text-align:right; }
+body.debt-page-mode #app .debt-actions { flex-direction:column; gap:4px; }
+body.debt-page-mode #app .debt-actions button {
+ width:100%; white-space:normal; padding:5px 2px !important; font-size:10px !important;
+ color:#24364b !important; background:#f3f6f7 !important; border-color:#d4dee5 !important;
+}
+body.debt-page-mode #app .debt-table .debt-paid { color:#137547 !important; }
+body.debt-page-mode #app .debt-table .debt-unpaid { color:#b42318 !important; }
+body.debt-page-mode #app .debt-footer-row td {
+ background:#e9eff3 !important; color:#172b4d !important; font-weight:900;
+}
+body.debt-page-mode #app .debt-empty { color:#526477 !important; padding:20px 12px; }
+body.debt-page-mode #app .tiny { color:#526477 !important; }
+@media(max-width:480px) {
+ body.debt-page-mode #app { padding:8px 10px 22px !important; }
+ body.debt-page-mode #app .debt-head h2 { font-size:18px; }
+ body.debt-page-mode #app .debt-head p { font-size:12px; }
+ body.debt-page-mode #app .debt-totals { gap:7px; }
+ body.debt-page-mode #app .debt-total { padding:9px 8px; }
+ body.debt-page-mode #app .debt-total strong { font-size:14px; }
+ body.debt-page-mode #app .debt-tab { font-size:12px; padding:9px 4px; }
+ body.debt-page-mode #app .debt-table th { font-size:10px !important; }
+ body.debt-page-mode #app .debt-table td { font-size:10px !important; padding:6px 2px !important; }
+}
+</style>
+
+
+<style id="vamyar-debt-calendar-control-fix-v24">
+/* Compact, clearly visible square calendar button in the add/edit form */
+body.debt-page-mode #app .debt-date-control {
+  display:flex !important; align-items:stretch !important; gap:8px !important; width:100% !important; min-width:0 !important;
+}
+body.debt-page-mode #app .debt-date-control input {
+  flex:1 1 auto !important; min-width:0 !important; width:0 !important; height:44px !important;
+  box-sizing:border-box !important; padding:8px 10px !important; border-radius:10px !important;
+}
+body.debt-page-mode #app .debt-date-control button {
+  display:inline-flex !important; align-items:center !important; justify-content:center !important;
+  flex:0 0 44px !important; width:44px !important; min-width:44px !important;
+  height:44px !important; min-height:44px !important; max-height:44px !important;
+  padding:0 !important; margin:0 !important; box-sizing:border-box !important;
+  border-radius:10px !important; line-height:1 !important; font-size:22px !important;
+  background:var(--primary,#147d75) !important; color:#fff !important;
+  border:1px solid var(--primary,#147d75) !important; box-shadow:none !important;
+}
+body.debt-page-mode #app .debt-date-control button::before { content:'📅'; display:block; font-size:20px; line-height:1; }
+body.debt-page-mode #app .debt-date-control button { font-size:0 !important; }
+body.debt-page-mode #app .debt-date-control button::before { font-size:20px !important; }
+</style>
+
+<style id="vamyar-debt-calendar-today-highlight-v28">
+/* Clearly mark today's Jalali date in the checks/debts calendar. */
+body.debt-page-mode #app .debt-cal-days button.debt-cal-today {
+  position:relative !important; background:#dbeafe !important; color:#123b78 !important;
+  border:2px solid #2563eb !important; font-weight:900 !important; box-shadow:inset 0 0 0 1px #fff !important;
+}
+body.debt-page-mode #app .debt-cal-legend {display:flex;align-items:center;justify-content:center;gap:6px;margin-top:8px;font-size:11px;color:#526477 !important}
+body.debt-page-mode #app .debt-cal-legend span {width:9px;height:9px;border-radius:50%;background:#2563eb;display:inline-block}
+body.dark-mode.debt-page-mode #app .debt-cal-days button.debt-cal-today {background:#1e3a8a !important;color:#fff !important;border-color:#60a5fa !important}
 </style>
